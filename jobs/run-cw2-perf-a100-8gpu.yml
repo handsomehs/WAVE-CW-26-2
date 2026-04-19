@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-perf-a100-8g-
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-perf-a100-8g
+    spec:
+      activeDeadlineSeconds: 43200
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g;
+            echo "===== CASE np=1 mpi=1,1,1 shape=256,256,256 nsteps=40 out_period=10 tag=weak_np1 =====";
+            stdbuf -oL -eL mpirun -np 1 build-cuda/awave -mpi 1,1,1 -shape 256,256,256 -nsteps 40 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np1;
+            echo "===== CASE np=2 mpi=2,1,1 shape=512,256,256 nsteps=40 out_period=10 tag=weak_np2 =====";
+            stdbuf -oL -eL mpirun -np 2 build-cuda/awave -mpi 2,1,1 -shape 512,256,256 -nsteps 40 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np2.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np2;
+            echo "===== CASE np=4 mpi=2,2,1 shape=512,512,256 nsteps=30 out_period=10 tag=weak_np4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 2,2,1 -shape 512,512,256 -nsteps 30 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np4.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np4;
+            echo "===== CASE np=8 mpi=2,2,2 shape=512,512,512 nsteps=20 out_period=10 tag=weak_np8 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 512,512,512 -nsteps 20 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np8.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/weak_np8;
+            echo "===== CASE np=1 mpi=1,1,1 shape=768,768,768 nsteps=20 out_period=10 tag=strong_np1 =====";
+            stdbuf -oL -eL mpirun -np 1 build-cuda/awave -mpi 1,1,1 -shape 768,768,768 -nsteps 20 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np1;
+            echo "===== CASE np=2 mpi=2,1,1 shape=768,768,768 nsteps=20 out_period=10 tag=strong_np2 =====";
+            stdbuf -oL -eL mpirun -np 2 build-cuda/awave -mpi 2,1,1 -shape 768,768,768 -nsteps 20 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np2.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np2;
+            echo "===== CASE np=4 mpi=2,2,1 shape=768,768,768 nsteps=20 out_period=10 tag=strong_np4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 2,2,1 -shape 768,768,768 -nsteps 20 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np4.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np4;
+            echo "===== CASE np=8 mpi=2,2,2 shape=768,768,768 nsteps=20 out_period=10 tag=strong_np8 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 768,768,768 -nsteps 20 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np8.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/strong_np8;
+            echo "===== CASE np=8 mpi=2,2,2 shape=1024,1024,1024 nsteps=10 out_period=5 tag=size1024 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 1024,1024,1024 -nsteps 10 -out_period 5 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size1024.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size1024;
+            echo "===== CASE np=8 mpi=2,2,2 shape=1536,1024,1024 nsteps=8 out_period=4 tag=size1536 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 1536,1024,1024 -nsteps 8 -out_period 4 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size1536.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size1536;
+            echo "===== CASE np=8 mpi=2,2,2 shape=2048,1024,1024 nsteps=6 out_period=3 tag=size2048 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 2048,1024,1024 -nsteps 6 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size2048.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size2048;
+            echo "===== CASE np=8 mpi=2,2,2 shape=2500,512,512 nsteps=6 out_period=3 tag=size2500 =====";
+            stdbuf -oL -eL mpirun -np 8 build-cuda/awave -mpi 2,2,2 -shape 2500,512,512 -nsteps 6 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size2500.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-perf-a100-8g/size2500;
+        resources:
+          requests:
+            cpu: 16
+            memory: 256Gi
+            nvidia.com/gpu: 8
+          limits:
+            cpu: 16
+            memory: 256Gi
+            nvidia.com/gpu: 8
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB

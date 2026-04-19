@@ -1,0 +1,71 @@
+{
+  "thresholds": {
+    "promote_ob1_threshold_pct": 3.0,
+    "keep_default_threshold_pct": -2.0,
+    "min_pairs": 2,
+    "max_queue_spread_pct": 10.0
+  },
+  "cases": [
+    {
+      "dir": "logs/awave-cw2-mpistack-ab-h100-2g-uq",
+      "gpu": "h100",
+      "gpus": 2,
+      "queue": "uq",
+      "repeat": null,
+      "default_n": 1,
+      "ob1_n": 1,
+      "default_mean_all": 402364750.0,
+      "ob1_mean_all": 383320750.0,
+      "gain_all_pct": -4.73301898339753,
+      "default_mean_steady": 402617333.3333333,
+      "ob1_mean_steady": 378350333.3333333,
+      "gain_steady_pct": -6.027311293105441,
+      "default_cv_pct": NaN,
+      "ob1_cv_pct": NaN
+    }
+  ],
+  "groups": [
+    {
+      "gpu": "h100",
+      "gpus": 2,
+      "queues": [
+        {
+          "dir": "logs/awave-cw2-mpistack-ab-h100-2g-uq",
+          "gpu": "h100",
+          "gpus": 2,
+          "queue": "uq",
+          "repeat": null,
+          "default_n": 1,
+          "ob1_n": 1,
+          "default_mean_all": 402364750.0,
+          "ob1_mean_all": 383320750.0,
+          "gain_all_pct": -4.73301898339753,
+          "default_mean_steady": 402617333.3333333,
+          "ob1_mean_steady": 378350333.3333333,
+          "gain_steady_pct": -6.027311293105441,
+          "default_cv_pct": NaN,
+          "ob1_cv_pct": NaN
+        }
+      ],
+      "queue_stats": [
+        {
+          "queue": "uq",
+          "repeats": 1,
+          "gain_steady_pct_mean": -6.027311293105441,
+          "gain_steady_pct_min": -6.027311293105441,
+          "gain_steady_pct_max": -6.027311293105441
+        }
+      ],
+      "default_n": 1,
+      "ob1_n": 1,
+      "default_mean_steady": 402617333.3333333,
+      "ob1_mean_steady": 378350333.3333333,
+      "gain_steady_pct": -6.027311293105441,
+      "repeat_spread_pct": 0.0,
+      "pairs": 1,
+      "queue_spread_pct": 0.0,
+      "status": "provisional-default",
+      "recommended_action": "keep-default-stack-for-next-stage"
+    }
+  ]
+}

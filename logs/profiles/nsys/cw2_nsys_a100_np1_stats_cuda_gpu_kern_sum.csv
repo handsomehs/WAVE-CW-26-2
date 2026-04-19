@@ -1,0 +1,4 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+83.7,23569144,12,1964095.3,1963474.0,1960306,1977074,4334.6,"<unnamed>::step_kernel_interior(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double)"
+16.2,4571836,12,380986.3,380973.0,380573,381405,257.3,"<unnamed>::step_kernel_boundary(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double)"
+0.0,1600,1,1600.0,1600.0,1600,1600,0.0,<unnamed>::warmup_kernel(double *)

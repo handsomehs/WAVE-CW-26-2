@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-probe-a10080-pq-
+  labels:
+    kueue.x-k8s.io/max-exec-time-seconds: "300"
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-probe-a10080-pq
+    spec:
+      activeDeadlineSeconds: 300
+      containers:
+      - name: run
+        image: $container
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            echo "probe-start";
+            nvidia-smi -L;
+            nvidia-smi --query-gpu=name,memory.total --format=csv,noheader;
+            echo "probe-done";
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 1
+            memory: 2Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB

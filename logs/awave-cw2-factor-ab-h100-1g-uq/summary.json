@@ -1,0 +1,74 @@
+{
+  "dir": "logs/awave-cw2-factor-ab-h100-1g-uq",
+  "rows": [
+    {
+      "case": "base",
+      "rep": 1,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/base_r1.json",
+      "all_mean": 66233975000.0,
+      "steady_mean": 66309000000.0,
+      "samples": 4
+    },
+    {
+      "case": "base",
+      "rep": 2,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/base_r2.json",
+      "all_mean": 66227200000.0,
+      "steady_mean": 66298900000.0,
+      "samples": 4
+    },
+    {
+      "case": "damp_off",
+      "rep": 1,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/damp_off_r1.json",
+      "all_mean": 66236050000.0,
+      "steady_mean": 66302500000.0,
+      "samples": 4
+    },
+    {
+      "case": "damp_off",
+      "rep": 2,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/damp_off_r2.json",
+      "all_mean": 66231350000.0,
+      "steady_mean": 66298866666.666664,
+      "samples": 4
+    },
+    {
+      "case": "zpad_off",
+      "rep": 1,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/zpad_off_r1.json",
+      "all_mean": 66553900000.0,
+      "steady_mean": 66614600000.0,
+      "samples": 4
+    },
+    {
+      "case": "zpad_off",
+      "rep": 2,
+      "file": "logs/awave-cw2-factor-ab-h100-1g-uq/zpad_off_r2.json",
+      "all_mean": 66533400000.0,
+      "steady_mean": 66605766666.666664,
+      "samples": 4
+    }
+  ],
+  "summary": {
+    "base": {
+      "n_runs": 2,
+      "steady_mean_of_runs": 66303950000.0,
+      "all_mean_of_runs": 66230587500.0
+    },
+    "damp_off": {
+      "n_runs": 2,
+      "steady_mean_of_runs": 66300683333.33333,
+      "all_mean_of_runs": 66233700000.0
+    },
+    "zpad_off": {
+      "n_runs": 2,
+      "steady_mean_of_runs": 66610183333.33333,
+      "all_mean_of_runs": 66543650000.0
+    },
+    "effects_pct": {
+      "damp_branchless_on_vs_off": 0.0049270482632035595,
+      "z_padding_on_vs_off": -0.45973951430348103
+    }
+  }
+}

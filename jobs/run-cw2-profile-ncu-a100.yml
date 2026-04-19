@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-ncu-a100-
+  labels:
+    kueue.x-k8s.io/max-exec-time-seconds: "300"
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-ncu-a100
+    spec:
+      activeDeadlineSeconds: 300
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: HOME
+            value: /home/eidf018/eidf018/shared/s2792840-epcc-pvc
+          - name: AWAVE_MPI_MODE
+            value: device
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            if ! command -v ncu >/dev/null 2>&1; then
+              echo "ncu not found in container PATH";
+              exit 127;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu;
+            ncu --set default --target-processes all --force-overwrite true --export /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu/cw2_ncu_a100_np1 build-cuda/awave -skip_cpu 1 -mpi 1,1,1 -shape 256,256,256 -nsteps 16 -out_period 8 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu/cw2_ncu_a100_np1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu/cw2_ncu_a100_np1;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu;
+        resources:
+          requests:
+            cpu: 4
+            memory: 24Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 24Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-40GB

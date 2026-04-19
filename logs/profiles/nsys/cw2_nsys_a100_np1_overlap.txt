@@ -1,0 +1,14 @@
+label=a100_np1
+interior_total_ms=23.569
+interior_instances=12
+boundary_total_ms=4.572
+boundary_instances=12
+compute_total_ms=28.141
+waitall_total_ms=1.932
+waitall_instances=12
+irecv_total_ms=0.000
+isend_total_ms=0.000
+waitall_vs_interior=0.082
+waitall_vs_compute=0.069
+overlap_proxy=0.918
+verdict=strong-overlap-indication

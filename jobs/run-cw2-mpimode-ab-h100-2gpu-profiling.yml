@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-mpimode-ab-h100-2g-pq-
+  labels:
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-mpimode-ab-h100-2g-pq
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq;
+            echo "===== MPI MODE DEVICE =====";
+            AWAVE_MPI_MODE=device AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=0 stdbuf -oL -eL mpirun -np 2 build-cuda/awave -skip_cpu 1 -mpi 2,1,1 -shape 768,768,768 -nsteps 12 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq/mode_device.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq/mode_device;
+            echo "===== MPI MODE HOST =====";
+            AWAVE_MPI_MODE=host AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=0 stdbuf -oL -eL mpirun -np 2 build-cuda/awave -skip_cpu 1 -mpi 2,1,1 -shape 768,768,768 -nsteps 12 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq/mode_host.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq/mode_host;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpimode-ab-h100-2g-pq;
+        resources:
+          requests:
+            cpu: 6
+            memory: 48Gi
+            nvidia.com/gpu: 2
+          limits:
+            cpu: 6
+            memory: 48Gi
+            nvidia.com/gpu: 2
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

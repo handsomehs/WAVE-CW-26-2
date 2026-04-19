@@ -1,0 +1,194 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-probe-comm-a100-
+spec:
+  completions: 1
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-probe-comm-a100
+    spec:
+      activeDeadlineSeconds: 1800
+      containers:
+      - name: run
+        image: $container
+        command:
+          - bash
+          - -lc
+          - |
+            set -euo pipefail
+
+            echo "=== COMM STACK PROBE (A100) ==="
+            date
+            hostname
+
+            echo "--- GPUs ---"
+            nvidia-smi -L || true
+
+            echo "--- OpenMPI (paths + versions) ---"
+            echo "mpirun=$(command -v mpirun || true)"
+            echo "mpicc=$(command -v mpicc || true)"
+            echo "ompi_info=$(command -v ompi_info || true)"
+            mpirun --version | head -n 2 || true
+            if [ -x "$(dirname "$(command -v mpirun || echo /usr/bin/mpirun)")/ompi_info" ]; then
+              "$(dirname "$(command -v mpirun || echo /usr/bin/mpirun)")/ompi_info" --version | head -n 3 || true
+              echo "--- OpenMPI components (from mpirun-matched ompi_info) ---"
+              "$(dirname "$(command -v mpirun || echo /usr/bin/mpirun)")/ompi_info" 2>/dev/null | egrep -i 'MCA pml:|MCA coll:' | egrep -i 'ucx|ucc|hcoll|ob1|cm' || true
+            else
+              ompi_info --version | head -n 3 || true
+              echo "--- OpenMPI components (from system ompi_info) ---"
+              ompi_info 2>/dev/null | egrep -i 'MCA pml:|MCA coll:' | egrep -i 'ucx|ucc|hcoll|ob1|cm' || true
+            fi
+
+            echo "--- Infiniband devices ---"
+            ls -l /dev/infiniband 2>/dev/null || echo "(no /dev/infiniband in container)"
+            ls -l /sys/class/infiniband 2>/dev/null || echo "(no /sys/class/infiniband)"
+
+            echo "--- UCX tool ---"
+            if command -v ucx_info >/dev/null 2>&1; then
+              echo "ucx_info=$(command -v ucx_info)"
+              ucx_info -v 2>/dev/null | head -n 40 || true
+            elif [ -n "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucx_info 2>/dev/null | head -n 1)" ]; then
+              echo "ucx_info=$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucx_info 2>/dev/null | head -n 1)"
+              "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucx_info 2>/dev/null | head -n 1)" -v 2>/dev/null | head -n 40 || true
+            else
+              echo "ucx_info not found"
+            fi
+
+            echo "--- UCC tool ---"
+            if command -v ucc_info >/dev/null 2>&1; then
+              echo "ucc_info=$(command -v ucc_info)"
+              ucc_info -v 2>/dev/null | head -n 40 || true
+            elif [ -n "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucc_info 2>/dev/null | head -n 1)" ]; then
+              echo "ucc_info=$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucc_info 2>/dev/null | head -n 1)"
+              "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name ucc_info 2>/dev/null | head -n 1)" -v 2>/dev/null | head -n 40 || true
+            else
+              echo "ucc_info not found"
+            fi
+
+            echo "--- HCOLL tool ---"
+            if command -v hcoll_info >/dev/null 2>&1; then
+              echo "hcoll_info=$(command -v hcoll_info)"
+              hcoll_info -v 2>/dev/null | head -n 60 || true
+            elif [ -n "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name hcoll_info 2>/dev/null | head -n 1)" ]; then
+              echo "hcoll_info=$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name hcoll_info 2>/dev/null | head -n 1)"
+              "$(find /opt/nvidia/hpc_sdk/Linux_x86_64 -maxdepth 6 -type f -name hcoll_info 2>/dev/null | head -n 1)" -v 2>/dev/null | head -n 60 || true
+            else
+              echo "hcoll_info not found"
+            fi
+
+            echo "--- NCCL presence ---"
+            (ldconfig -p 2>/dev/null | egrep -i 'libnccl\.so' || true) | head -n 20
+            ls -l /opt/nvidia/hpc_sdk/Linux_x86_64/*/comm_libs/*/nccl/include/nccl.h 2>/dev/null | head -n 5 || true
+            ls -l /opt/nvidia/hpc_sdk/Linux_x86_64/*/comm_libs/*/nccl/lib/libnccl.so* 2>/dev/null | head -n 5 || true
+
+            echo "--- Build + run a tiny MPI_Allreduce test under different stacks ---"
+            cat > /tmp/mpi_allreduce.c <<'EOF'
+            #include <mpi.h>
+            #include <stdio.h>
+            int main(int argc, char** argv) {
+              MPI_Init(&argc, &argv);
+              int rank, size;
+              MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+              MPI_Comm_size(MPI_COMM_WORLD, &size);
+              double send = (double)(rank + 1);
+              double recv = 0.0;
+              for (int it = 0; it < 1000; ++it) {
+                MPI_Allreduce(&send, &recv, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+              }
+              if (rank == 0) {
+                printf("Allreduce OK: size=%d sum=%f\n", size, recv);
+              }
+              MPI_Finalize();
+              return 0;
+            }
+            EOF
+            if [ -x "$(dirname "$(command -v mpirun || echo /usr/bin/mpirun)")/mpicc" ]; then
+              "$(dirname "$(command -v mpirun || echo /usr/bin/mpirun)")/mpicc" -O2 /tmp/mpi_allreduce.c -o /tmp/mpi_allreduce
+            elif command -v mpicc >/dev/null 2>&1; then
+              mpicc -O2 /tmp/mpi_allreduce.c -o /tmp/mpi_allreduce
+            else
+              echo "mpicc not found; skipping runtime MPI tests"
+              exit 0
+            fi
+
+            echo "=== CASE default ==="
+            set +e
+            mpirun -np 2 /tmp/mpi_allreduce
+            echo "rc=$?"
+            set -e
+
+            echo "=== CASE pml_ucx ==="
+            set +e
+            UCX_LOG_LEVEL=info mpirun --mca pml ucx -np 2 /tmp/mpi_allreduce
+            echo "rc=$?"
+            set -e
+
+            echo "=== CASE coll_ucc ==="
+            set +e
+            mpirun --mca coll_ucc_enable 1 --mca coll_ucc_priority 100 --mca coll_hcoll_enable 0 --mca coll_base_verbose 10 -np 2 /tmp/mpi_allreduce
+            echo "rc=$?"
+            set -e
+
+            echo "=== CASE coll_hcoll ==="
+            set +e
+            mpirun --mca coll_hcoll_enable 1 --mca coll_hcoll_priority 100 --mca coll_ucc_enable 0 --mca coll_base_verbose 10 -np 2 /tmp/mpi_allreduce
+            echo "rc=$?"
+            set -e
+
+            echo "--- Optional: compile + run ncclGetVersion() ---"
+            cat > /tmp/nccl_version.cu <<'EOF'
+            #include <stdio.h>
+            #include <nccl.h>
+            int main() {
+              int v = 0;
+              ncclResult_t r = ncclGetVersion(&v);
+              if (r != ncclSuccess) {
+                printf("ncclGetVersion failed: %s\n", ncclGetErrorString(r));
+                return 1;
+              }
+              printf("NCCL version (raw) = %d\n", v);
+              return 0;
+            }
+            EOF
+            if command -v nvcc >/dev/null 2>&1; then
+              echo "nvcc=$(command -v nvcc)"
+              set +e
+              nvcc -O2 /tmp/nccl_version.cu \
+                -I/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/include \
+                -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/lib -lnccl \
+                -o /tmp/nccl_version
+              echo "nvcc rc=$?"
+              set -e
+              ldd /tmp/nccl_version || true
+              LD_LIBRARY_PATH=/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/lib /tmp/nccl_version || true
+            elif [ -x "/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/13.0/bin/nvcc" ]; then
+              echo "nvcc=/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/13.0/bin/nvcc"
+              set +e
+              /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/13.0/bin/nvcc -O2 /tmp/nccl_version.cu \
+                -I/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/include \
+                -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/lib -lnccl \
+                -o /tmp/nccl_version
+              echo "nvcc rc=$?"
+              set -e
+              ldd /tmp/nccl_version || true
+              LD_LIBRARY_PATH=/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/comm_libs/13.0/nccl/lib /tmp/nccl_version || true
+            else
+              echo "nvcc not found; skipping NCCL compile test"
+            fi
+
+            echo "=== PROBE DONE ==="
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 2
+            memory: 4Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB

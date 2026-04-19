@@ -1,0 +1,135 @@
+{
+  "dir": "logs/awave-cw2-tune-h100-1g-uq",
+  "cases": [
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk0.json",
+      "tile": 0,
+      "blk": 0,
+      "all_mean": 67060075000.0,
+      "steady_mean": 67123000000.0,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk1.json",
+      "tile": 0,
+      "blk": 1,
+      "all_mean": 60170175000.0,
+      "steady_mean": 60233933333.333336,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk2.json",
+      "tile": 0,
+      "blk": 2,
+      "all_mean": 59450675000.0,
+      "steady_mean": 59509733333.333336,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk3.json",
+      "tile": 0,
+      "blk": 3,
+      "all_mean": 62154300000.0,
+      "steady_mean": 62199566666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk4.json",
+      "tile": 0,
+      "blk": 4,
+      "all_mean": 64962675000.0,
+      "steady_mean": 65042166666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk5.json",
+      "tile": 0,
+      "blk": 5,
+      "all_mean": 63535675000.0,
+      "steady_mean": 63601466666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk6.json",
+      "tile": 0,
+      "blk": 6,
+      "all_mean": 67074150000.0,
+      "steady_mean": 67149166666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk0.json",
+      "tile": 1,
+      "blk": 0,
+      "all_mean": 61767775000.0,
+      "steady_mean": 61836566666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk1.json",
+      "tile": 1,
+      "blk": 1,
+      "all_mean": 60268075000.0,
+      "steady_mean": 60326466666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk2.json",
+      "tile": 1,
+      "blk": 2,
+      "all_mean": 59681775000.0,
+      "steady_mean": 59744766666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk3.json",
+      "tile": 1,
+      "blk": 3,
+      "all_mean": 61672050000.0,
+      "steady_mean": 61731500000.0,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk4.json",
+      "tile": 1,
+      "blk": 4,
+      "all_mean": 64007375000.0,
+      "steady_mean": 64064166666.666664,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk5.json",
+      "tile": 1,
+      "blk": 5,
+      "all_mean": 62745650000.0,
+      "steady_mean": 62815500000.0,
+      "samples": 4
+    },
+    {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk6.json",
+      "tile": 1,
+      "blk": 6,
+      "all_mean": 61745425000.0,
+      "steady_mean": 61834366666.666664,
+      "samples": 4
+    }
+  ],
+  "best_per_tile": {
+    "0": {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile0_blk6.json",
+      "tile": 0,
+      "blk": 6,
+      "all_mean": 67074150000.0,
+      "steady_mean": 67149166666.666664,
+      "samples": 4
+    },
+    "1": {
+      "file": "logs/awave-cw2-tune-h100-1g-uq/tile1_blk4.json",
+      "tile": 1,
+      "blk": 4,
+      "all_mean": 64007375000.0,
+      "steady_mean": 64064166666.666664,
+      "samples": 4
+    }
+  }
+}

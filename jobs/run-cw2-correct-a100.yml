@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-correct-a100-
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-correct-a100
+    spec:
+      activeDeadlineSeconds: 3600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100;
+            stdbuf -oL -eL build-cuda/awave
+            -mpi 1,1,1
+            -shape 256,256,256
+            -nsteps 20
+            -out_period 10
+            -io 0
+            -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100/correct.json
+            /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100/correct;
+        resources:
+          requests:
+            cpu: 4
+            memory: 16Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 16Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB
