@@ -1,0 +1,3 @@
+time_utc=2026-04-19T18:15:40.469976Z
+candidates=1
+delete	awave-cw2-correct-h100-1-2-4g-uq-7pfsg	key=awave-cw2-correct-h100-1-2-4g	queue=eidf018ns-user-queue

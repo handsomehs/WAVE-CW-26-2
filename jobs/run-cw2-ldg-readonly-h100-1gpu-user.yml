@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-ldg-ro-h100-1g-uq-
+  labels:
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-ldg-ro-h100-1g-uq
+    spec:
+      activeDeadlineSeconds: 1800
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -d build-cuda ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+            fi;
+            cmake --build build-cuda -j;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-ldg-ro-h100-1g-uq;
+            AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=6 AWAVE_CUDA_DAMP_BRANCHLESS=0 AWAVE_CUDA_ZPAD=1 stdbuf -oL -eL mpirun -np 1 build-cuda/awave -skip_cpu 1 -mpi 1,1,1 -shape 768,768,768 -nsteps 12 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-ldg-ro-h100-1g-uq/run.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-ldg-ro-h100-1g-uq/run;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-ldg-ro-h100-1g-uq;
+        resources:
+          requests:
+            cpu: 4
+            memory: 48Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 48Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - gpu8-vm42
+                - gpu8-vm01
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

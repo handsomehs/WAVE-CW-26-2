@@ -1,0 +1,349 @@
+{
+  "generated_at_utc": "2026-04-19T18:17:52.676223+00:00",
+  "summary": {
+    "correctness": {
+      "templates": 13,
+      "has_artifacts": 8,
+      "skipped_pending": 1,
+      "no_artifact": 4
+    },
+    "perf": {
+      "templates": 8,
+      "has_artifacts": 5,
+      "skipped_pending": 2,
+      "no_artifact": 1
+    },
+    "profile": {
+      "templates": 8,
+      "has_artifacts": 5,
+      "skipped_pending": 3,
+      "no_artifact": 0
+    }
+  },
+  "rows": [
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-1gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-a100-1g-pq-",
+      "status": "not_submitted_or_ttl_cleaned_no_artifact",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-1gpu-user.yml",
+      "generateName": "awave-cw2-correct-a100-1g-uq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-a100-1g-uq"
+      ],
+      "artifact_file_count": 1,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-2gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-a100-2g-pq-",
+      "status": "not_submitted_or_ttl_cleaned_no_artifact",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-2gpu-user.yml",
+      "generateName": "awave-cw2-correct-a100-2g-uq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-a100-2g-uq"
+      ],
+      "artifact_file_count": 3,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-4gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-a100-4g-pq-",
+      "status": "not_submitted_or_ttl_cleaned_no_artifact",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-a100-4gpu-user.yml",
+      "generateName": "awave-cw2-correct-a100-4g-uq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-a100-4g-uq"
+      ],
+      "artifact_file_count": 4,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-h100-1gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-h100-1g-pq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-h100-1g-pq"
+      ],
+      "artifact_file_count": 1,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-h100-1gpu-user.yml",
+      "generateName": "awave-cw2-correct-h100-1g-uq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-h100-1g-uq"
+      ],
+      "artifact_file_count": 1,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-h100-2gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-h100-2g-pq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-h100-2g-pq"
+      ],
+      "artifact_file_count": 3,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-h100-2gpu-user.yml",
+      "generateName": "awave-cw2-correct-h100-2g-uq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-h100-2g-uq"
+      ],
+      "artifact_file_count": 3,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-h100-4gpu-user.yml",
+      "generateName": "awave-cw2-correct-h100-4g-uq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-correct-h100-4g-uq-22nbc"
+      ]
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-matrix-h100-4gpu-profiling.yml",
+      "generateName": "awave-cw2-correct-h100-1-2-4g-pq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-correct-h100-1_2_4g-pq"
+      ],
+      "artifact_file_count": 7,
+      "pending_jobs": []
+    },
+    {
+      "category": "correctness",
+      "template": "run-cw2-correctness-matrix-h100-4gpu-user.yml",
+      "generateName": "awave-cw2-correct-h100-1-2-4g-uq-",
+      "status": "not_submitted_or_ttl_cleaned_no_artifact",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": []
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-a100-4gpu-profiling.yml",
+      "generateName": "awave-cw2-perf-a100-4g-pq-",
+      "status": "not_submitted_or_ttl_cleaned_no_artifact",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": []
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-a100-4gpu.yml",
+      "generateName": "awave-cw2-perf-a100-4g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-perf-a100-4g"
+      ],
+      "artifact_file_count": 10,
+      "pending_jobs": []
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-a100-8gpu-profiling.yml",
+      "generateName": "awave-cw2-perf-a100-8g-pq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-perf-a100-8g-pq-x2kkg"
+      ]
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-a100-8gpu.yml",
+      "generateName": "awave-cw2-perf-a100-8g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-perf-a100-8g"
+      ],
+      "artifact_file_count": 12,
+      "pending_jobs": [
+        "awave-cw2-perf-a100-8g-7wwdp",
+        "awave-cw2-perf-a100-8g-pq-x2kkg"
+      ]
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-h100-4gpu-profiling.yml",
+      "generateName": "awave-cw2-perf-h100-4g-pq-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-perf-h100-4g-pq"
+      ],
+      "artifact_file_count": 10,
+      "pending_jobs": [
+        "awave-cw2-perf-h100-4g-pq-djlqk"
+      ]
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-h100-4gpu.yml",
+      "generateName": "awave-cw2-perf-h100-4g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-perf-h100-4g"
+      ],
+      "artifact_file_count": 10,
+      "pending_jobs": [
+        "awave-cw2-perf-h100-4g-8g8rl",
+        "awave-cw2-perf-h100-4g-pq-djlqk"
+      ]
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-h100-8gpu-profiling.yml",
+      "generateName": "awave-cw2-perf-h100-8g-pq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-perf-h100-8g-pq-7979h"
+      ]
+    },
+    {
+      "category": "perf",
+      "template": "run-cw2-perf-h100-8gpu.yml",
+      "generateName": "awave-cw2-perf-h100-8g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/awave-cw2-perf-h100-8g"
+      ],
+      "artifact_file_count": 12,
+      "pending_jobs": [
+        "awave-cw2-perf-h100-8g-pq-7979h",
+        "awave-cw2-perf-h100-8g-q5g7q"
+      ]
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-a100-4gpu.yml",
+      "generateName": "awave-cw2-nsys-a100-4g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/profiles/nsys"
+      ],
+      "artifact_file_count": 21,
+      "pending_jobs": []
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-a100-8gpu.yml",
+      "generateName": "awave-cw2-nsys-a100-8g-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/profiles/nsys"
+      ],
+      "artifact_file_count": 21,
+      "pending_jobs": []
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-a100.yml",
+      "generateName": "awave-cw2-nsys-a100-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/profiles/nsys"
+      ],
+      "artifact_file_count": 21,
+      "pending_jobs": []
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-h100-4gpu-profiling.yml",
+      "generateName": "awave-cw2-nsys-h100-4g-pq-r5-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/profiles/nsys_scale_h100_np4_pq_r5"
+      ],
+      "artifact_file_count": 8,
+      "pending_jobs": [
+        "awave-cw2-nsys-h100-4g-pq-r5-kfw5x"
+      ]
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-h100-4gpu-user.yml",
+      "generateName": "awave-cw2-nsys-h100-4g-uq-r5-",
+      "status": "has_artifacts",
+      "artifact_dirs": [
+        "logs/profiles/nsys_scale_h100_np4_uq_r5"
+      ],
+      "artifact_file_count": 8,
+      "pending_jobs": [
+        "awave-cw2-nsys-h100-4g-uq-r5-hm2hp"
+      ]
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-h100-roofline-fallback-user.yml",
+      "generateName": "awave-cw2-nsys-h100-roofline-manual-uq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-nsys-h100-roofline-manual-uq-ff9fl"
+      ]
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-matrix-a100-8gpu-user.yml",
+      "generateName": "awave-cw2-nsys-matrix-a100-8g-uq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-nsys-matrix-a100-8g-uq-p8dl7"
+      ]
+    },
+    {
+      "category": "profile",
+      "template": "run-cw2-profile-nsys-matrix-h100-8gpu-user.yml",
+      "generateName": "awave-cw2-nsys-matrix-h100-8g-uq-",
+      "status": "skipped_pending",
+      "artifact_dirs": [],
+      "artifact_file_count": 0,
+      "pending_jobs": [
+        "awave-cw2-nsys-matrix-h100-8g-uq-whll7"
+      ]
+    }
+  ]
+}

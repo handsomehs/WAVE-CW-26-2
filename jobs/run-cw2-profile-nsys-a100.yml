@@ -3,7 +3,7 @@ kind: Job
 metadata:
   generateName: awave-cw2-nsys-a100-
   labels:
-    kueue.x-k8s.io/max-exec-time-seconds: "300"
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
     kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
 spec:
   completions: 1
@@ -13,7 +13,7 @@ spec:
     metadata:
       name: awave-cw2-nsys-a100
     spec:
-      activeDeadlineSeconds: 300
+      activeDeadlineSeconds: 600
       containers:
       - name: run
         image: $container

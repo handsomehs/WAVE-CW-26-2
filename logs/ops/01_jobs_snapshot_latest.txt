@@ -1,0 +1,17 @@
+awave-cw2-correct-a100-1g-uq-75hdk             Complete    1/1   39s     29m
+awave-cw2-correct-h100-1-2-4g-pq-4n6hk         Complete    1/1   53s     8m40s
+awave-cw2-correct-h100-1-2-4g-uq-7pfsg         Suspended   0/1           8m38s
+awave-cw2-correct-h100-4g-uq-22nbc             Suspended   0/1           27m
+awave-cw2-nsys-a100-4g-pg9v9                   Complete    1/1   54s     28m
+awave-cw2-nsys-a100-8g-gnz6r                   Complete    1/1   50s     28m
+awave-cw2-nsys-h100-4g-pq-r5-kfw5x             Suspended   0/1           28m
+awave-cw2-nsys-h100-4g-uq-r5-hm2hp             Suspended   0/1           28m
+awave-cw2-nsys-h100-roofline-manual-uq-ff9fl   Suspended   0/1           28m
+awave-cw2-nsys-matrix-a100-8g-uq-p8dl7         Suspended   0/1           28m
+awave-cw2-nsys-matrix-h100-8g-uq-whll7         Suspended   0/1           28m
+awave-cw2-perf-a100-8g-7wwdp                   Suspended   0/1           36m
+awave-cw2-perf-a100-8g-pq-x2kkg                Suspended   0/1           36m
+awave-cw2-perf-h100-4g-8g8rl                   Suspended   0/1           42m
+awave-cw2-perf-h100-4g-pq-djlqk                Suspended   0/1           36m
+awave-cw2-perf-h100-8g-pq-7979h                Suspended   0/1           36m
+awave-cw2-perf-h100-8g-q5g7q                   Suspended   0/1           36m

@@ -1,0 +1,6 @@
+==WARNING== Could not deploy stock section files to "//Documents/NVIDIA Nsight Compute/2025.3.0/Sections".
+Set the HOME environment variable to a writable directory.
+==WARNING== Using "/opt/nvidia/hpc_sdk/Linux_x86_64/25.9/profilers/13.0/Nsight_Compute/target/linux-desktop-glibc_2_11_3-x64/../../sections" instead.
+==WARNING== See https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#faq.
+==ERROR== Could not open report file '/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/ncu_roofline_h100/ncu_interior_512.ncu-rep'.
+==ERROR== The file does not exist or is not a regular file.

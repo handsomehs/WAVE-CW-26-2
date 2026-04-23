@@ -1,0 +1,127 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-probe-cuda-h100-uq-
+  labels:
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+spec:
+  completions: 1
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-probe-cuda-h100-uq
+    spec:
+      activeDeadlineSeconds: 900
+      containers:
+      - name: run
+        image: $container
+        command:
+          - bash
+          - -lc
+          - |
+            set -euo pipefail
+
+            echo "=== CUDA PROBE (H100 user queue) ==="
+            date
+            hostname
+            echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-<unset>}"
+            echo "NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-<unset>}"
+            echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-<unset>}"
+            echo "--- HPC SDK CUDA directories ---"
+            ls -la /opt/nvidia/hpc_sdk/Linux_x86_64 || true
+            ls -la /opt/nvidia/hpc_sdk/Linux_x86_64/25.9 || true
+            ls -la /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda || true
+            ls -la /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/bin || true
+            command -v nvcc || true
+
+            echo "--- /dev/nvidia* ---"
+            ls -l /dev/nvidia* || true
+
+            echo "--- nvidia-smi -L ---"
+            nvidia-smi -L || true
+
+            cat >/tmp/cuda_probe.cu <<'EOF'
+            #include <cuda_runtime.h>
+            #include <cstdio>
+            int main() {
+              int count = -1;
+              cudaError_t err = cudaGetDeviceCount(&count);
+              std::printf("cudaGetDeviceCount err=%d (%s), count=%d\n",
+                          static_cast<int>(err), cudaGetErrorString(err), count);
+              if (err != cudaSuccess) return 1;
+              for (int i = 0; i < count; ++i) {
+                cudaDeviceProp prop{};
+                cudaError_t pe = cudaGetDeviceProperties(&prop, i);
+                std::printf("device %d: err=%d (%s), name=%s\n",
+                            i, static_cast<int>(pe), cudaGetErrorString(pe),
+                            (pe == cudaSuccess ? prop.name : "<n/a>"));
+              }
+              return 0;
+            }
+            EOF
+
+            echo "--- build with /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/compilers/bin/nvcc ---"
+            /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/compilers/bin/nvcc -O2 /tmp/cuda_probe.cu -o /tmp/cuda_probe_default
+            ldd /tmp/cuda_probe_default | egrep 'libcuda|libcudart' || true
+            echo "--- direct run (/tmp/cuda_probe_default) ---"
+            set +e
+            /tmp/cuda_probe_default
+            echo "rc=$?"
+            set -e
+            echo "--- mpirun -np 1 (/tmp/cuda_probe_default) ---"
+            set +e
+            mpirun -np 1 /tmp/cuda_probe_default
+            echo "rc=$?"
+            set -e
+
+            if [ -x /usr/local/cuda/bin/nvcc ]; then
+              echo "--- build with /usr/local/cuda/bin/nvcc ---"
+              /usr/local/cuda/bin/nvcc -O2 /tmp/cuda_probe.cu -o /tmp/cuda_probe_usr_local
+              ldd /tmp/cuda_probe_usr_local | egrep 'libcuda|libcudart' || true
+              echo "--- direct run (/tmp/cuda_probe_usr_local) ---"
+              set +e
+              /tmp/cuda_probe_usr_local
+              echo "rc=$?"
+              set -e
+              echo "--- mpirun -np 1 (/tmp/cuda_probe_usr_local) ---"
+              set +e
+              mpirun -np 1 /tmp/cuda_probe_usr_local
+              echo "rc=$?"
+              set -e
+            fi
+
+            if [ -x /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/12.9/bin/nvcc ]; then
+              echo "--- build with /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/12.9/bin/nvcc ---"
+              /opt/nvidia/hpc_sdk/Linux_x86_64/25.9/cuda/12.9/bin/nvcc -O2 /tmp/cuda_probe.cu -o /tmp/cuda_probe_129
+              ldd /tmp/cuda_probe_129 | egrep 'libcuda|libcudart' || true
+              echo "--- direct run (/tmp/cuda_probe_129) ---"
+              set +e
+              /tmp/cuda_probe_129
+              echo "rc=$?"
+              set -e
+              echo "--- mpirun -np 1 (/tmp/cuda_probe_129) ---"
+              set +e
+              mpirun -np 1 /tmp/cuda_probe_129
+              echo "rc=$?"
+              set -e
+            fi
+
+            echo "=== PROBE DONE ==="
+        env:
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 2
+            memory: 4Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

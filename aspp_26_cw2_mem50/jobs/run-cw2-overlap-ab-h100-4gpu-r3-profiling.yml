@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-overlap-ab-h100-4g-r3-pq-
+  labels:
+    eidf/user: s2792840-epcc
+    kueue.x-k8s.io/max-exec-time-seconds: "300"
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-overlap-ab-h100-4g-r3-pq
+      labels:
+        eidf/user: s2792840-epcc
+    spec:
+      activeDeadlineSeconds: 300
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq;
+            echo "===== REP=1 OV=0 =====";
+            AWAVE_CUDA_OVERLAP=0 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r1_ov0.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r1_ov0;
+            echo "===== REP=1 OV=1 =====";
+            AWAVE_CUDA_OVERLAP=1 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r1_ov1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r1_ov1;
+            echo "===== REP=2 OV=0 =====";
+            AWAVE_CUDA_OVERLAP=0 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r2_ov0.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r2_ov0;
+            echo "===== REP=2 OV=1 =====";
+            AWAVE_CUDA_OVERLAP=1 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r2_ov1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r2_ov1;
+            echo "===== REP=3 OV=0 =====";
+            AWAVE_CUDA_OVERLAP=0 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r3_ov0.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r3_ov0;
+            echo "===== REP=3 OV=1 =====";
+            AWAVE_CUDA_OVERLAP=1 stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r3_ov1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq/reorder_h100_4g_r3_ov1;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-overlap-ab-h100-4g-r3-pq;
+        resources:
+          requests:
+            cpu: 10
+            memory: 128Gi
+            nvidia.com/gpu: 4
+          limits:
+            cpu: 10
+            memory: 128Gi
+            nvidia.com/gpu: 4
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

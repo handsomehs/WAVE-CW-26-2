@@ -4,7 +4,6 @@ Generated after running:
 
 - `tools/aggregate_stats.py`
 - `jobs/run-cw2-profile-nsys-a100.yml`
-- `jobs/run-cw2-profile-ncu-a100.yml`
 
 ## Robust statistics (all-sample vs steady-state)
 
@@ -27,8 +26,5 @@ Interpretation: cold-start samples materially depress all-sample scaling and cro
 - Nsight Systems job completed and produced:
   - `logs/profiles/nsys/cw2_nsys_a100_np1.nsys-rep`
   - `logs/profiles/nsys/cw2_nsys_a100_np1.json`
-- Nsight Compute job completed but returned:
-  - `No metrics to collect found in sections.`
-  - `No kernels were profiled.`
-
-So NCU was started and executed, but this container/runtime currently does not emit kernel-level NCU artifacts.
+- Nsight Compute path is now retired in this repository workflow.
+- Roofline-style evidence is derived from Nsight Systems kernel timing plus manual calculations.

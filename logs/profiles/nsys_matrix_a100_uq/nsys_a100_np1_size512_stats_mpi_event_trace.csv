@@ -1,0 +1,6 @@
+Start (ns),End (ns),Duration (ns),Event,Pid,Tid,Tag,Rank,PeerRank,RootRank,Size (MB),CollSendSize (MB),CollRecvSize (MB)
+357589466,1025675625,668086159,MPI_Init_thread,118,118,,0,,,,,
+13814774516,13814776670,2154,MPI_Barrier,118,118,,0,,,,,
+13814784755,13814785196,441,MPI_Barrier,118,118,,0,,,,,
+13853809499,13853810902,1403,MPI_Barrier,118,118,,0,,,,,
+15147224779,15203370966,56146187,MPI_Finalize,118,118,,0,,,,,

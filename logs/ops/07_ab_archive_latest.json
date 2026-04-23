@@ -1,0 +1,129 @@
+{
+  "generated_at_utc": "2026-04-19T18:17:53.979348+00:00",
+  "rows": [
+    {
+      "category": "ab",
+      "dir_count": 120,
+      "json_count": 204,
+      "latest_file_utc": "2026-04-19T17:57:21.401406+00:00",
+      "sample_dirs": [
+        "awave-cw2-boundary-ab-a100-2g-pq-r1",
+        "awave-cw2-boundary-ab-a100-2g-pq-r2",
+        "awave-cw2-boundary-ab-a100-2g-pq-r3",
+        "awave-cw2-boundary-ab-a100-2g-pq-r4",
+        "awave-cw2-boundary-ab-a100-2g-pq-r5"
+      ]
+    },
+    {
+      "category": "boundary",
+      "dir_count": 32,
+      "json_count": 36,
+      "latest_file_utc": "2026-04-18T18:27:55.101209+00:00",
+      "sample_dirs": [
+        "awave-cw2-boundary-ab-a100-2g-pq-r1",
+        "awave-cw2-boundary-ab-a100-2g-pq-r2",
+        "awave-cw2-boundary-ab-a100-2g-pq-r3",
+        "awave-cw2-boundary-ab-a100-2g-pq-r4",
+        "awave-cw2-boundary-ab-a100-2g-pq-r5"
+      ]
+    },
+    {
+      "category": "ldg",
+      "dir_count": 1,
+      "json_count": 1,
+      "latest_file_utc": "2026-04-19T08:35:26.834636+00:00",
+      "sample_dirs": [
+        "awave-cw2-ldg-ro-h100-1g-uq"
+      ]
+    },
+    {
+      "category": "mpimode",
+      "dir_count": 17,
+      "json_count": 26,
+      "latest_file_utc": "2026-04-18T15:19:35.435947+00:00",
+      "sample_dirs": [
+        "awave-cw2-mpimode-ab-a100-2g-pq-r1",
+        "awave-cw2-mpimode-ab-a100-2g-pq-r2",
+        "awave-cw2-mpimode-ab-a100-2g-pq-r3",
+        "awave-cw2-mpimode-ab-a100-2g-pq-r4",
+        "awave-cw2-mpimode-ab-a100-2g-pq-r5"
+      ]
+    },
+    {
+      "category": "mpistack",
+      "dir_count": 13,
+      "json_count": 14,
+      "latest_file_utc": "2026-04-18T15:50:15.951743+00:00",
+      "sample_dirs": [
+        "awave-cw2-mpistack-ab-a100-2g-pq-r1",
+        "awave-cw2-mpistack-ab-a100-2g-pq-r2",
+        "awave-cw2-mpistack-ab-a100-2g-pq-r3",
+        "awave-cw2-mpistack-ab-a100-2g-uq-r1",
+        "awave-cw2-mpistack-ab-a100-2g-uq-r2"
+      ]
+    },
+    {
+      "category": "overlap",
+      "dir_count": 33,
+      "json_count": 67,
+      "latest_file_utc": "2026-04-19T17:57:21.401406+00:00",
+      "sample_dirs": [
+        "awave-cw2-overlap-ab-a100-2g-pq",
+        "awave-cw2-overlap-ab-a100-2g-pq-r1",
+        "awave-cw2-overlap-ab-a100-2g-pq-r2",
+        "awave-cw2-overlap-ab-a100-2g-pq-r3",
+        "awave-cw2-overlap-ab-a100-2g-pq-r4"
+      ]
+    },
+    {
+      "category": "tune",
+      "dir_count": 4,
+      "json_count": 41,
+      "latest_file_utc": "2026-04-19T18:07:38.147678+00:00",
+      "sample_dirs": [
+        "awave-cw2-tune-a100-1g-pq",
+        "awave-cw2-tune-a100-1g-uq",
+        "awave-cw2-tune-h100-1g-pq",
+        "awave-cw2-tune-h100-1g-uq"
+      ]
+    },
+    {
+      "category": "waitsome",
+      "dir_count": 20,
+      "json_count": 30,
+      "latest_file_utc": "2026-04-18T16:47:35.590053+00:00",
+      "sample_dirs": [
+        "awave-cw2-waitsome-ab-a100-2g-pq-r1",
+        "awave-cw2-waitsome-ab-a100-2g-pq-r2",
+        "awave-cw2-waitsome-ab-a100-2g-pq-r3",
+        "awave-cw2-waitsome-ab-a100-2g-pq-r4",
+        "awave-cw2-waitsome-ab-a100-2g-pq-r5"
+      ]
+    },
+    {
+      "category": "probe",
+      "dir_count": 0,
+      "json_count": 0,
+      "latest_file_utc": null,
+      "sample_dirs": []
+    },
+    {
+      "category": "prewarm",
+      "dir_count": 1,
+      "json_count": 3,
+      "latest_file_utc": "2026-04-19T16:23:01.089668+00:00",
+      "sample_dirs": [
+        "awave-cw2-prewarm-ab-h100-4g-pq"
+      ]
+    },
+    {
+      "category": "retest",
+      "dir_count": 1,
+      "json_count": 4,
+      "latest_file_utc": "2026-04-19T15:56:47.877362+00:00",
+      "sample_dirs": [
+        "awave-cw2-retest-h100-4g-pq"
+      ]
+    }
+  ]
+}

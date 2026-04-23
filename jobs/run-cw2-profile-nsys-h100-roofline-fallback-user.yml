@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-nsys-h100-roofline-manual-uq-
+  labels:
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-nsys-h100-roofline-manual-uq
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: HOME
+            value: /home/eidf018/eidf018/shared/s2792840-epcc-pvc
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            bash tools/run_nsys_roofline_fallback_h100.sh;
+        resources:
+          requests:
+            cpu: 4
+            memory: 128Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 128Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - gpu8-vm42
+                - gpu8-vm01
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

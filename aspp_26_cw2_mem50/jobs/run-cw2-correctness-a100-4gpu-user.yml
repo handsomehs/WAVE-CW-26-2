@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-correct-a100-4g-uq-
+  labels:
+    eidf/user: s2792840-epcc
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-correct-a100-4g-uq
+      labels:
+        eidf/user: s2792840-epcc
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq;
+            echo "===== CASE a100_g4_split_221 np=4 mpi=2,2,1 shape=160,160,160 nsteps=4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 2,2,1 -shape 160,160,160 -nsteps 4 -out_period 4 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_221.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_221;
+            echo "===== CASE a100_g4_split_212 np=4 mpi=2,1,2 shape=160,160,160 nsteps=4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 2,1,2 -shape 160,160,160 -nsteps 4 -out_period 4 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_212.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_212;
+            echo "===== CASE a100_g4_split_122 np=4 mpi=1,2,2 shape=160,160,160 nsteps=4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 160,160,160 -nsteps 4 -out_period 4 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_122.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_122;
+            echo "===== CASE a100_g4_noncubic_122 np=4 mpi=1,2,2 shape=224,160,128 nsteps=4 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 224,160,128 -nsteps 4 -out_period 4 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_noncubic_122.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_noncubic_122;
+            echo "a100_g4_split_221.json ndiff=$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_221.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')";
+            echo "a100_g4_split_212.json ndiff=$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_212.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')";
+            echo "a100_g4_split_122.json ndiff=$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_122.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')";
+            echo "a100_g4_noncubic_122.json ndiff=$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_noncubic_122.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')";
+            [ "$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_221.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')" = "0" ];
+            [ "$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_212.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')" = "0" ];
+            [ "$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_split_122.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')" = "0" ];
+            [ "$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq/a100_g4_noncubic_122.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')" = "0" ];
+            echo "Correctness PASSED";
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-a100-4g-uq;
+        resources:
+          requests:
+            cpu: 8
+            memory: 48Gi
+            nvidia.com/gpu: 4
+          limits:
+            cpu: 8
+            memory: 48Gi
+            nvidia.com/gpu: 4
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB

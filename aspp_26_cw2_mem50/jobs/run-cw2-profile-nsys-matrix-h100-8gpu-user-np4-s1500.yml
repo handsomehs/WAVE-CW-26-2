@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-nsys-matrix-h100-8g-uq-np4-s1500-
+  labels:
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-nsys-matrix-h100-8g-uq-np4-s1500
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -d build-cuda ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+            fi;
+            cmake --build build-cuda -j;
+            if ! command -v nsys >/dev/null 2>&1; then
+              echo "nsys not found in container PATH";
+              exit 127;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq;
+            AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=6 AWAVE_CUDA_DAMP_BRANCHLESS=0 AWAVE_CUDA_ZPAD=0 nsys profile --trace=cuda,mpi,nvtx --mpi-impl=openmpi --stats=true -f true -o /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500 mpirun -np 4 build-cuda/awave -skip_cpu 1 -mpi 1,2,2 -shape 1500,1500,1500 -nsteps 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500;
+            nsys stats --force-export=true --format csv --report cuda_gpu_kern_sum,mpi_event_sum,cuda_kern_exec_trace,mpi_event_trace --output /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500_stats /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500.nsys-rep;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_matrix_h100_uq/nsys_h100_np4_size1500*;
+        resources:
+          requests:
+            cpu: 16
+            memory: 376Gi
+            nvidia.com/gpu: 4
+          limits:
+            cpu: 16
+            memory: 376Gi
+            nvidia.com/gpu: 4
+      restartPolicy: Never
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - gpu8-vm42
+                - gpu8-vm01
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

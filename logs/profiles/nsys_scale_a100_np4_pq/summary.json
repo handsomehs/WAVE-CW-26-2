@@ -1,0 +1,17 @@
+{
+  "rows": [
+    {
+      "gpu": "A100",
+      "ngpu": 4,
+      "size": 1000,
+      "interior_avg_ms": 6.770252224999999,
+      "mpi_waitall_avg_ms": 0.7031685999999999,
+      "mpi_waitall_total_ms": 56.253487,
+      "compute_total_ms": 292.833465,
+      "communication_fraction_pct": 16.114462794358467,
+      "overlap_proxy_pct": 79.22769893554445,
+      "kernel_sum_csv": "/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_scale_a100_np4_pq/nsys_a100_np4_size1000_stats_cuda_gpu_kern_sum.csv",
+      "mpi_sum_csv": "/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_scale_a100_np4_pq/nsys_a100_np4_size1000_stats_mpi_event_sum.csv"
+    }
+  ]
+}

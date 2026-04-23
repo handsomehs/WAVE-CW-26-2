@@ -1,0 +1,88 @@
+{
+  "rows": [
+    {
+      "size": 256,
+      "interior_points": 16387064.0,
+      "interior_avg_ms": 0.2177644,
+      "sups": 75251345031.60295,
+      "inferred_b_per_site": 44.517476712118786,
+      "naive_bw_util_pct": 197.67517500838986,
+      "optimistic_bw_util_pct": 89.85235227654084,
+      "interior_share_pct": 85.89496736108467,
+      "boundary_total_share_pct": 14.08736173155959,
+      "boundary_x_avg_ms": 0.005059149999999999,
+      "boundary_y_avg_ms": 0.005057600000000001,
+      "boundary_z_avg_ms": 0.0255981,
+      "kernel_sum_csv": "/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_roofline_h100/nsys_single_256_stats_cuda_gpu_kern_sum.csv"
+    },
+    {
+      "size": 512,
+      "interior_points": 132651000.0,
+      "interior_avg_ms": 1.9012653,
+      "sups": 69769852739.64659,
+      "inferred_b_per_site": 48.01500746319289,
+      "naive_bw_util_pct": 183.2760310772806,
+      "optimistic_bw_util_pct": 83.30728685330936,
+      "interior_share_pct": 92.89161237385957,
+      "boundary_total_share_pct": 7.106198797346066,
+      "boundary_x_avg_ms": 0.01265435,
+      "boundary_y_avg_ms": 0.0125775,
+      "boundary_z_avg_ms": 0.12021475,
+      "kernel_sum_csv": "/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_roofline_h100/nsys_single_512_stats_cuda_gpu_kern_sum.csv"
+    },
+    {
+      "size": 1000,
+      "interior_points": 994011992.0,
+      "interior_avg_ms": 14.24182095,
+      "sups": 69795287799.90736,
+      "inferred_b_per_site": 47.99750965428996,
+      "naive_bw_util_pct": 183.34284556393575,
+      "optimistic_bw_util_pct": 83.33765707451624,
+      "interior_share_pct": 96.2515741354833,
+      "boundary_total_share_pct": 3.748123089293191,
+      "boundary_x_avg_ms": 0.04007815,
+      "boundary_y_avg_ms": 0.03994225,
+      "boundary_z_avg_ms": 0.47456895,
+      "kernel_sum_csv": "/home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/profiles/nsys_roofline_h100/nsys_single_1000_stats_cuda_gpu_kern_sum.csv"
+    }
+  ],
+  "boundary_table_size_1000": [
+    {
+      "kernel": "step_kernel_interior",
+      "instances": 20.0,
+      "avg_ms": 14.24182095,
+      "share_pct": 96.2515741354833
+    },
+    {
+      "kernel": "step_kernel_boundary_x_faces",
+      "instances": 20.0,
+      "avg_ms": 0.04007815,
+      "share_pct": 0.2708631880348151
+    },
+    {
+      "kernel": "step_kernel_boundary_y_faces",
+      "instances": 20.0,
+      "avg_ms": 0.03994225,
+      "share_pct": 0.26994472480100995
+    },
+    {
+      "kernel": "step_kernel_boundary_z_faces",
+      "instances": 20.0,
+      "avg_ms": 0.47456895,
+      "share_pct": 3.2073151764573664
+    }
+  ],
+  "notes": {
+    "method": "NSYS kernel timing + manual derivation (NCU removed)",
+    "hbm_peak_bytes_per_sec": 3350000000000.0,
+    "naive_bytes_per_site": 88.0,
+    "optimistic_bytes_per_site": 40.0,
+    "formulas": {
+      "interior_points": "(size - 2)^3",
+      "sups": "interior_points / interior_kernel_time_sec",
+      "inferred_b_per_site": "hbm_peak_bytes_per_sec / sups",
+      "naive_bw_util_pct": "sups * 88 / hbm_peak_bytes_per_sec * 100",
+      "optimistic_bw_util_pct": "sups * 40 / hbm_peak_bytes_per_sec * 100"
+    }
+  }
+}

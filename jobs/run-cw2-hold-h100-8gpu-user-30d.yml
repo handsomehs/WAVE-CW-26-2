@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-hold-h100-8g-uq-30d-
+  labels:
+    eidf/user: s2792840-epcc
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+    kueue.x-k8s.io/max-exec-time-seconds: "2592000"
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-hold-h100-8g-uq-30d
+      labels:
+        eidf/user: s2792840-epcc
+    spec:
+      activeDeadlineSeconds: 2592000
+      containers:
+      - name: hold
+        image: $container
+        command:
+          - /bin/bash
+          - -c
+        args:
+          - sleep 30d
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "10Mi"
+            nvidia.com/gpu: 8
+          limits:
+            cpu: "16"
+            memory: "512Gi"
+            nvidia.com/gpu: 8
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

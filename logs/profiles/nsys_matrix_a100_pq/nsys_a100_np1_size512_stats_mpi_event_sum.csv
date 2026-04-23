@@ -1,0 +1,4 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Source,Name
+86.8,586645062,1,586645062.0,586645062.0,586645062,586645062,0.0,other,MPI_Init_thread
+13.2,89007189,1,89007189.0,89007189.0,89007189,89007189,0.0,other,MPI_Finalize
+0.0,9028,3,3009.3,3116.0,431,5481,2526.7,collectives,MPI_Barrier

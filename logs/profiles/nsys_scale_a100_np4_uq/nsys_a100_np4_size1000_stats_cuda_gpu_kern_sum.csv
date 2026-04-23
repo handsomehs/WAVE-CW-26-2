@@ -1,0 +1,10 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+90.8,270877085,40,6771927.1,6773748.5,6746162,6796531,11793.6,"<unnamed>::step_kernel_interior(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double, bool)"
+6.5,19459831,40,486495.8,486049.0,483167,491266,2046.8,"<unnamed>::step_kernel_boundary_z_faces(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double, bool)"
+1.1,3142117,40,78552.9,78064.0,76992,82849,1296.6,"<unnamed>::unpack_face_z(const double *, double *, int, int, int, int, int)"
+0.6,1782628,40,44565.7,44224.0,43616,47456,917.0,"<unnamed>::pack_face_z(const double *, double *, int, int, int, int, int)"
+0.5,1583907,40,39597.7,39504.0,36544,42880,1340.8,"<unnamed>::step_kernel_boundary_y_faces(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double, bool)"
+0.3,978177,40,24454.4,24784.0,22784,26240,1089.3,"<unnamed>::step_kernel_boundary_x_faces(const double *, const double *, double *, const double *, const double *, int, int, int, int, int, int, int, double, double, bool)"
+0.1,300927,40,7523.2,6944.0,6272,11136,1218.1,"<unnamed>::unpack_face_y(const double *, double *, int, int, int, int, int)"
+0.1,283489,40,7087.2,6880.0,6624,9504,754.7,"<unnamed>::pack_face_y(const double *, double *, int, int, int, int, int)"
+0.0,6048,4,1512.0,1472.0,1472,1632,80.0,<unnamed>::warmup_kernel(double *)

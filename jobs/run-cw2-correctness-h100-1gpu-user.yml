@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-correct-h100-1g-uq-
+  labels:
+    eidf/user: s2792840-epcc
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-correct-h100-1g-uq
+      labels:
+        eidf/user: s2792840-epcc
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq;
+            echo "===== CASE g1_split_111 np=1 mpi=1,1,1 shape=320,320,320 nsteps=10 =====";
+            stdbuf -oL -eL mpirun -np 1 build-cuda/awave -mpi 1,1,1 -shape 320,320,320 -nsteps 10 -out_period 10 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq/g1_split_111.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq/g1_split_111;
+            echo "g1_split_111.json ndiff=$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq/g1_split_111.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')";
+            [ "$(grep -oE '"ndiff"[[:space:]]*:[[:space:]]*[0-9]+' /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq/g1_split_111.json | head -n1 | sed -E 's/.*:[[:space:]]*([0-9]+)/\1/')" = "0" ];
+            echo "Correctness PASSED";
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-correct-h100-1g-uq;
+        resources:
+          requests:
+            cpu: 4
+            memory: 16Gi
+            nvidia.com/gpu: 1
+          limits:
+            cpu: 4
+            memory: 16Gi
+            nvidia.com/gpu: 1
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

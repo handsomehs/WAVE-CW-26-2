@@ -1,0 +1,12 @@
+category,dir_count,json_count,latest_file_utc,sample_dirs
+ab,120,204,2026-04-19T17:57:21.401406+00:00,awave-cw2-boundary-ab-a100-2g-pq-r1;awave-cw2-boundary-ab-a100-2g-pq-r2;awave-cw2-boundary-ab-a100-2g-pq-r3;awave-cw2-boundary-ab-a100-2g-pq-r4;awave-cw2-boundary-ab-a100-2g-pq-r5
+boundary,32,36,2026-04-18T18:27:55.101209+00:00,awave-cw2-boundary-ab-a100-2g-pq-r1;awave-cw2-boundary-ab-a100-2g-pq-r2;awave-cw2-boundary-ab-a100-2g-pq-r3;awave-cw2-boundary-ab-a100-2g-pq-r4;awave-cw2-boundary-ab-a100-2g-pq-r5
+ldg,1,1,2026-04-19T08:35:26.834636+00:00,awave-cw2-ldg-ro-h100-1g-uq
+mpimode,17,26,2026-04-18T15:19:35.435947+00:00,awave-cw2-mpimode-ab-a100-2g-pq-r1;awave-cw2-mpimode-ab-a100-2g-pq-r2;awave-cw2-mpimode-ab-a100-2g-pq-r3;awave-cw2-mpimode-ab-a100-2g-pq-r4;awave-cw2-mpimode-ab-a100-2g-pq-r5
+mpistack,13,14,2026-04-18T15:50:15.951743+00:00,awave-cw2-mpistack-ab-a100-2g-pq-r1;awave-cw2-mpistack-ab-a100-2g-pq-r2;awave-cw2-mpistack-ab-a100-2g-pq-r3;awave-cw2-mpistack-ab-a100-2g-uq-r1;awave-cw2-mpistack-ab-a100-2g-uq-r2
+overlap,33,67,2026-04-19T17:57:21.401406+00:00,awave-cw2-overlap-ab-a100-2g-pq;awave-cw2-overlap-ab-a100-2g-pq-r1;awave-cw2-overlap-ab-a100-2g-pq-r2;awave-cw2-overlap-ab-a100-2g-pq-r3;awave-cw2-overlap-ab-a100-2g-pq-r4
+tune,4,41,2026-04-19T18:07:38.147678+00:00,awave-cw2-tune-a100-1g-pq;awave-cw2-tune-a100-1g-uq;awave-cw2-tune-h100-1g-pq;awave-cw2-tune-h100-1g-uq
+waitsome,20,30,2026-04-18T16:47:35.590053+00:00,awave-cw2-waitsome-ab-a100-2g-pq-r1;awave-cw2-waitsome-ab-a100-2g-pq-r2;awave-cw2-waitsome-ab-a100-2g-pq-r3;awave-cw2-waitsome-ab-a100-2g-pq-r4;awave-cw2-waitsome-ab-a100-2g-pq-r5
+probe,0,0,,
+prewarm,1,3,2026-04-19T16:23:01.089668+00:00,awave-cw2-prewarm-ab-h100-4g-pq
+retest,1,4,2026-04-19T15:56:47.877362+00:00,awave-cw2-retest-h100-4g-pq

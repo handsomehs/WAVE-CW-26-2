@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-retest-h100-4g-pq-
+  labels:
+    eidf/user: s2792840-epcc
+    kueue.x-k8s.io/max-exec-time-seconds: "600"
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-retest-h100-4g-pq
+      labels:
+        eidf/user: s2792840-epcc
+    spec:
+      activeDeadlineSeconds: 600
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq;
+            echo "===== CUDA PROBE =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 256,256,256 -nsteps 2 -out_period 2 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/probe.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/probe 2>&1 | tee /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/probe.log;
+            if grep -q "No CUDA device found; CUDA simulation will run on CPU" /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/probe.log; then
+              echo "FATAL: CUDA fallback detected, aborting benchmark run";
+              exit 42;
+            fi;
+            echo "===== RETEST REP=1 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r1;
+            echo "===== RETEST REP=2 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r2.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r2;
+            echo "===== RETEST REP=3 =====";
+            stdbuf -oL -eL mpirun -np 4 build-cuda/awave -mpi 1,2,2 -shape 1000,1000,1000 -nsteps 20 -skip_cpu 1 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r3.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq/retest_h100_4g_r3;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-retest-h100-4g-pq;
+        resources:
+          requests:
+            cpu: 10
+            memory: 128Gi
+            nvidia.com/gpu: 4
+          limits:
+            cpu: 10
+            memory: 128Gi
+            nvidia.com/gpu: 4
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3

@@ -1,0 +1,36 @@
+{
+  "rows": {
+    "1000": {
+      "dram_pct_peak": NaN,
+      "sm_pct_peak": NaN,
+      "occupancy_pct": NaN,
+      "bytes_per_site": NaN,
+      "l2_hit_pct": NaN,
+      "dram_bytes_read": NaN,
+      "dram_bytes_write": NaN
+    },
+    "256": {
+      "dram_pct_peak": NaN,
+      "sm_pct_peak": NaN,
+      "occupancy_pct": NaN,
+      "bytes_per_site": NaN,
+      "l2_hit_pct": NaN,
+      "dram_bytes_read": NaN,
+      "dram_bytes_write": NaN
+    },
+    "512": {
+      "dram_pct_peak": NaN,
+      "sm_pct_peak": NaN,
+      "occupancy_pct": NaN,
+      "bytes_per_site": NaN,
+      "l2_hit_pct": NaN,
+      "dram_bytes_read": NaN,
+      "dram_bytes_write": NaN
+    }
+  },
+  "boundary_1000": {
+    "dram_pct_peak": NaN,
+    "sm_pct_peak": NaN,
+    "occupancy_pct": NaN
+  }
+}

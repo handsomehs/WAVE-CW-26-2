@@ -1,0 +1,474 @@
+{
+  "generated_at_utc": "2026-04-19T18:17:53.355708+00:00",
+  "dir_rows": [
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "cases": 10,
+      "gpu_time_mean_s": 0.026188861600000002,
+      "gpu_sups_mean": 93360960000.0,
+      "all_ndiff_zero": true
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "cases": 12,
+      "gpu_time_mean_s": 0.03420382655172414,
+      "gpu_sups_mean": 107308327586.2069,
+      "all_ndiff_zero": true
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "cases": 10,
+      "gpu_time_mean_s": 0.022015792,
+      "gpu_sups_mean": 122902064000.0,
+      "all_ndiff_zero": true
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "cases": 10,
+      "gpu_time_mean_s": 0.0145235636,
+      "gpu_sups_mean": 170939304000.0,
+      "all_ndiff_zero": true
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "cases": 12,
+      "gpu_time_mean_s": 0.027150402413793105,
+      "gpu_sups_mean": 177607248275.86206,
+      "all_ndiff_zero": true
+    }
+  ],
+  "case_rows": [
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "size1024",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.02015355,
+      "gpu_sups_mean": 133195000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "size1536",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0239622,
+      "gpu_sups_mean": 134430500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "size2048",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01782695,
+      "gpu_sups_mean": 135522000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "size2500",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.00925123,
+      "gpu_sups_mean": 141682500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "strong_np1",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.1289285,
+      "gpu_sups_mean": 35134600000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "strong_np2",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.06538095,
+      "gpu_sups_mean": 69285700000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "strong_np4",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0335904,
+      "gpu_sups_mean": 134855500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "weak_np1",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0048528275,
+      "gpu_sups_mean": 34572575000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "weak_np2",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.005182805,
+      "gpu_sups_mean": 64743525000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-4g",
+      "case": "weak_np4",
+      "samples": 3,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.005463816666666666,
+      "gpu_sups_mean": 122849333333.33333
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "size1024",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0350547,
+      "gpu_sups_mean": 183650500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "size1536",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0382081,
+      "gpu_sups_mean": 191581500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "size2048",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0373089,
+      "gpu_sups_mean": 194265000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "size2500",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.022873325,
+      "gpu_sups_mean": 153970450000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "strong_np1",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.149899,
+      "gpu_sups_mean": 30222600000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "strong_np2",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0776376,
+      "gpu_sups_mean": 58379800000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "strong_np4",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.04074595,
+      "gpu_sups_mean": 113087050000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "strong_np8",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0346227,
+      "gpu_sups_mean": 175834550000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "weak_np1",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.00519171,
+      "gpu_sups_mean": 32321950000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "weak_np2",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0070462375,
+      "gpu_sups_mean": 54447325000.0
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "weak_np4",
+      "samples": 3,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.010388236666666667,
+      "gpu_sups_mean": 93736666666.66667
+    },
+    {
+      "dir": "awave-cw2-perf-a100-8g",
+      "case": "weak_np8",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.019546960000000002,
+      "gpu_sups_mean": 140835750000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "size1024",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0221791,
+      "gpu_sups_mean": 165838100000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "size1536",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.025042,
+      "gpu_sups_mean": 170268500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "size2048",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.020918390000000002,
+      "gpu_sups_mean": 166572450000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "size2500",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01723516,
+      "gpu_sups_mean": 151072200000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "strong_np1",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0809043,
+      "gpu_sups_mean": 55990400000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "strong_np2",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.04587235,
+      "gpu_sups_mean": 100051500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "strong_np4",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0304123,
+      "gpu_sups_mean": 176727000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "weak_np1",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0028037975,
+      "gpu_sups_mean": 59972275000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "weak_np2",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0052307175,
+      "gpu_sups_mean": 95289950000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g",
+      "case": "weak_np4",
+      "samples": 3,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01104318,
+      "gpu_sups_mean": 159487466666.66666
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "size1024",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01061775,
+      "gpu_sups_mean": 252818000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "size1536",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01257285,
+      "gpu_sups_mean": 256205500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "size2048",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.009112869999999999,
+      "gpu_sups_mean": 265111500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "size2500",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.00476789,
+      "gpu_sups_mean": 274907500000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "strong_np1",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0679247,
+      "gpu_sups_mean": 66689250000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "strong_np2",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.04164665,
+      "gpu_sups_mean": 108875000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "strong_np4",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.01777375,
+      "gpu_sups_mean": 254862000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "weak_np1",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.00325347,
+      "gpu_sups_mean": 56921025000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "weak_np2",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.002875485,
+      "gpu_sups_mean": 116692750000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-4g-pq",
+      "case": "weak_np4",
+      "samples": 3,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.003246783333333333,
+      "gpu_sups_mean": 206696666666.66666
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "size1024",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.037142749999999995,
+      "gpu_sups_mean": 290689800000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "size1536",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.03934475,
+      "gpu_sups_mean": 299408700000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "size2048",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0399202,
+      "gpu_sups_mean": 299623650000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "size2500",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.03036619,
+      "gpu_sups_mean": 263584700000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "strong_np1",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.08084285,
+      "gpu_sups_mean": 56032800000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "strong_np2",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.043528449999999996,
+      "gpu_sups_mean": 104539600000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "strong_np4",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.02845495,
+      "gpu_sups_mean": 182186000000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "strong_np8",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.03576496,
+      "gpu_sups_mean": 283181100000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "weak_np1",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.002783035,
+      "gpu_sups_mean": 60338050000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "weak_np2",
+      "samples": 4,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.0048318425,
+      "gpu_sups_mean": 97945975000.0
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "weak_np4",
+      "samples": 3,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.009632139999999999,
+      "gpu_sups_mean": 164065966666.66666
+    },
+    {
+      "dir": "awave-cw2-perf-h100-8g",
+      "case": "weak_np8",
+      "samples": 2,
+      "ndiff": 0,
+      "gpu_time_mean_s": 0.02863777,
+      "gpu_sups_mean": 233391750000.0
+    }
+  ]
+}

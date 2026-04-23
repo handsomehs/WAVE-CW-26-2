@@ -1,0 +1,115 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: "2026-04-20T08:20:23Z"
+  generateName: awave-p64x-h100-restart-
+  generation: 2
+  labels:
+    eidf/user: s2908447-aspp
+    kueue.x-k8s.io/max-exec-time-seconds: "9000"
+    kueue.x-k8s.io/priority-class: default-workload-priority
+    kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+  name: awave-p64x-h100-restart-sr4jk
+  namespace: eidf018ns
+  resourceVersion: "796789983"
+  uid: da3b576e-70b3-4066-a9f6-6530ba3841e5
+spec:
+  backoffLimit: 0
+  completionMode: NonIndexed
+  completions: 1
+  manualSelector: false
+  parallelism: 1
+  podReplacementPolicy: TerminatingOrFailed
+  selector:
+    matchLabels:
+      batch.kubernetes.io/controller-uid: da3b576e-70b3-4066-a9f6-6530ba3841e5
+  suspend: false
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        batch.kubernetes.io/controller-uid: da3b576e-70b3-4066-a9f6-6530ba3841e5
+        batch.kubernetes.io/job-name: awave-p64x-h100-restart-sr4jk
+        controller-uid: da3b576e-70b3-4066-a9f6-6530ba3841e5
+        eidf/user: s2908447-aspp
+        job-name: awave-p64x-h100-restart-sr4jk
+        kueue.x-k8s.io/max-exec-time-seconds: "9000"
+        kueue.x-k8s.io/queue-name: eidf018ns-profiling-queue
+    spec:
+      activeDeadlineSeconds: 9000
+      containers:
+      - args:
+        - |
+          set -euo pipefail
+          bash "/pvc/aspp-26-cw2/phase/64_x/run_awave_restart_suite.sh" \
+            "/pvc/aspp-26-cw2/phase/64_x/build-cuda/awave" \
+            "/pvc/aspp-26-cw2/results/64_x/h100_restart" \
+            "/pvc/aspp-26-cw2/phase/64_x/restart_cases_h100.txt" \
+            "64_x-h100-restart"
+        command:
+        - bash
+        - -lc
+        image: registry.eidf.ac.uk/eidf018/aspp-dev-env:0.2.2
+        imagePullPolicy: IfNotPresent
+        name: awave
+        resources:
+          limits:
+            cpu: "16"
+            memory: 64Gi
+            nvidia.com/gpu: "8"
+          requests:
+            cpu: "16"
+            memory: 64Gi
+            nvidia.com/gpu: "8"
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /pvc
+          name: work
+        - mountPath: /dev/shm
+          name: dshm
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        general_node: "true"
+        nvidia.com/gpu.present: "true"
+        nvidia.com/gpu.product: NVIDIA-H100-80GB-HBM3
+        profiling_node: "true"
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: work
+        persistentVolumeClaim:
+          claimName: s2908447-aspp-pvc
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 8Gi
+        name: dshm
+  ttlSecondsAfterFinished: 57600
+status:
+  completionTime: "2026-04-20T08:26:58Z"
+  conditions:
+  - lastProbeTime: "2026-04-20T08:20:23Z"
+    lastTransitionTime: "2026-04-20T08:20:23Z"
+    message: Job resumed
+    reason: JobResumed
+    status: "False"
+    type: Suspended
+  - lastProbeTime: "2026-04-20T08:26:58Z"
+    lastTransitionTime: "2026-04-20T08:26:58Z"
+    message: Reached expected number of succeeded pods
+    reason: CompletionsReached
+    status: "True"
+    type: SuccessCriteriaMet
+  - lastProbeTime: "2026-04-20T08:26:59Z"
+    lastTransitionTime: "2026-04-20T08:26:59Z"
+    message: Reached expected number of succeeded pods
+    reason: CompletionsReached
+    status: "True"
+    type: Complete
+  ready: 0
+  startTime: "2026-04-20T08:20:23Z"
+  succeeded: 1
+  terminating: 0
+  uncountedTerminatedPods: {}

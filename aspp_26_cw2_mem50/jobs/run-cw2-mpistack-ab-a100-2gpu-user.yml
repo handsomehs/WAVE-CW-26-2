@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: awave-cw2-mpistack-ab-a100-2g-uq-
+  labels:
+    kueue.x-k8s.io/queue-name: eidf018ns-user-queue
+spec:
+  completions: 1
+  backoffLimit: 1
+  ttlSecondsAfterFinished: 1800
+  template:
+    metadata:
+      name: awave-cw2-mpistack-ab-a100-2g-uq
+    spec:
+      activeDeadlineSeconds: 1800
+      containers:
+      - name: run
+        image: $container
+        env:
+          - name: AWAVE_MPI_MODE
+            value: device
+          - name: OMPI_MCA_coll_hcoll_enable
+            value: "0"
+          - name: OMPI_MCA_coll_ucc_enable
+            value: "0"
+        command:
+          - bash
+          - -lc
+          - >-
+            set -euo pipefail;
+            cd /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2;
+            if [ ! -x build-cuda/awave ]; then
+              cmake -S src -B build-cuda -DAWAVE_MODE=CUDA -DCMAKE_BUILD_TYPE=Release;
+              cmake --build build-cuda -j;
+            fi;
+            mkdir -p /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq;
+            echo "===== MPI STACK DEFAULT =====";
+            AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=0 stdbuf -oL -eL mpirun -np 2 build-cuda/awave -skip_cpu 1 -mpi 2,1,1 -shape 768,768,768 -nsteps 12 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq/stack_default.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq/stack_default;
+            echo "===== MPI STACK OB1+TCP/VADER =====";
+            AWAVE_CUDA_OVERLAP=1 AWAVE_CUDA_TILE=0 AWAVE_CUDA_BLOCK=0 stdbuf -oL -eL mpirun --mca pml ob1 --mca btl self,vader,tcp -np 2 build-cuda/awave -skip_cpu 1 -mpi 2,1,1 -shape 768,768,768 -nsteps 12 -out_period 3 -io 0 -json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq/stack_ob1.json /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq/stack_ob1;
+            ls -lh /home/eidf018/eidf018/shared/s2792840-epcc-pvc/ASPP_CW2/aspp_26_cw2/logs/awave-cw2-mpistack-ab-a100-2g-uq;
+        resources:
+          requests:
+            cpu: 6
+            memory: 48Gi
+            nvidia.com/gpu: 2
+          limits:
+            cpu: 6
+            memory: 48Gi
+            nvidia.com/gpu: 2
+      restartPolicy: Never
+      nodeSelector:
+        nvidia.com/gpu.product: NVIDIA-A100-SXM4-80GB

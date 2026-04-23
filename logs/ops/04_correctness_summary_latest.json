@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-04-19T18:17:52.865819+00:00",
+  "rows": [
+    {
+      "dir": "awave-cw2-correct-a100",
+      "cases": 1,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.004868635,
+      "gpu_sups_mean": 34462250000.0,
+      "cpu_time_mean_s": 0.55016
+    },
+    {
+      "dir": "awave-cw2-correct-a100-1g-uq",
+      "cases": 1,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.0029631,
+      "gpu_sups_mean": 33972300000.0,
+      "cpu_time_mean_s": 0.29163
+    },
+    {
+      "dir": "awave-cw2-correct-a100-2g-uq",
+      "cases": 3,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.0007273623333333333,
+      "gpu_sups_mean": 38940900000.0,
+      "cpu_time_mean_s": 0.05572370000000001
+    },
+    {
+      "dir": "awave-cw2-correct-a100-4g-uq",
+      "cases": 4,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.0006746092499999999,
+      "gpu_sups_mean": 25058300000.0,
+      "cpu_time_mean_s": 0.0178215
+    },
+    {
+      "dir": "awave-cw2-correct-h100-1_2_4g-pq",
+      "cases": 7,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.002324307142857143,
+      "gpu_sups_mean": 121886500000.0,
+      "cpu_time_mean_s": 0.7124074285714286
+    },
+    {
+      "dir": "awave-cw2-correct-h100-1g-pq",
+      "cases": 1,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.00496466,
+      "gpu_sups_mean": 66002500000.0,
+      "cpu_time_mean_s": 28.1862
+    },
+    {
+      "dir": "awave-cw2-correct-h100-1g-uq",
+      "cases": 1,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 1.59666,
+      "gpu_sups_mean": 205228000.0,
+      "cpu_time_mean_s": 1.62409
+    },
+    {
+      "dir": "awave-cw2-correct-h100-2g-pq",
+      "cases": 3,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.06727803,
+      "gpu_sups_mean": 40986750000.0,
+      "cpu_time_mean_s": 6.062906666666667
+    },
+    {
+      "dir": "awave-cw2-correct-h100-2g-uq",
+      "cases": 3,
+      "all_ndiff_zero": true,
+      "max_ndiff": 0,
+      "gpu_time_mean_s": 0.7494583333333334,
+      "gpu_sups_mean": 350020666.6666667,
+      "cpu_time_mean_s": 0.7493443333333333
+    }
+  ]
+}

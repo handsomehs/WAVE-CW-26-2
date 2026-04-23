@@ -1,0 +1,3 @@
+mode0_peak_bytes=70429888512
+mode1_peak_bytes=35231244288
+reduction_pct=49.976856371145296

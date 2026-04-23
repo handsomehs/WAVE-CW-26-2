@@ -783,3 +783,35 @@ Decision:
 - Stage B boundary scaling validation is complete for `a100-4g` and `h100-8g`.
 - Boundary split remains promoted at 2G/4G/8G based on current gate evidence.
 
+## [2026-04-19] NCU path removed; NSYS + manual derivation standardized
+
+### Why
+
+- Nsight Compute roofline collection remained unreliable on this runtime (`Could not open report file ... .ncu-rep`).
+- Needed a stable method that can always run in queue jobs without privileged hardware counters.
+
+### What was added
+
+- NCU artifacts removed from active workflow:
+  - deleted `jobs/run-cw2-profile-ncu-a100.yml`
+  - deleted `jobs/run-cw2-profile-ncu-h100-roofline-user.yml`
+  - deleted `tools/ncu_roofline_summary.py`
+- NSYS execution script updated:
+  - `tools/run_nsys_roofline_fallback_h100.sh`
+  - runs 1-GPU H100 cases for sizes `256/512/1000/2000` with `-nsteps 20`
+  - uses `--trace=cuda,nvtx --cuda-event-trace=kernel`
+  - exports `cuda_gpu_kern_sum` and `cuda_kern_exec_trace`
+- NSYS summary tool updated:
+  - `tools/nsys_roofline_fallback_summary.py`
+  - computes 1A/1B/1C report evidence from timing only:
+    - 1A: interior kernel time, SU/s, inferred B/site, naive/optimistic bandwidth utilization
+    - 1B: `step_kernel_boundary_{x,y,z}_faces` vs `step_kernel_interior` share for size `1000`
+    - 1C: multi-size trend table (`256/512/1000/2000`)
+- Runbook update:
+  - `jobs/JOBS.md` section `7/7.1` now documents NSYS-only path and manual formulas.
+
+### Operational note
+
+- Final profiling path for roofline-style analysis is now NSYS-only with manual derivation.
+- Report evidence should cite three layers: theoretical bound, measured back-calculation, and NSYS timeline/kernel tables.
+
